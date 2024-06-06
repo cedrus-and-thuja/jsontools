@@ -32,7 +32,7 @@ func main() {
 	}
 	schema, err := compiler.Compile("schema.json")
 	if err != nil {
-		fmt.Printf("error parsing schema: %s\n, err)
+		fmt.Printf("error parsing schema: %s\n", err)
 		os.Exit(1)
 	}
 	if !generateGo && !generateKotlin {

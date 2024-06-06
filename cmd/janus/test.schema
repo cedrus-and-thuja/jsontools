@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/product.schema.json",
+  "title": "CreateInvoicesMessage",
+  "description": "Message Payload for a create invoice event",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "integer",
+      "enum": [
+        1, 2, 3
+      ]
+    },
+    "registrationSummary": {
+      "type": "array",
+      "description": "List of information about a user's registration",
+      "unevaluatedItems": false,
+      "minContains": 1,
+      "items": {
+        "type": "object",
+        "title": "RegistrationSummary",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "maximum": 2147483647
+          },
+          "programId": {
+            "type": "integer"
+          },
+          "externalRegistrationId": {
+            "type": "string",
+            "description": "NG Registration ID"
+          },
+          "baseEventRole": {
+            "type": "string",
+            "enum": [
+              "captain",
+              "player",
+              "free_agent"
+            ]
+          },
+          "programStaffId": {
+            "type": "integer"
+          },
+          "variableTeamFee": {
+            "type": "boolean",
+            "default": false
+          },
+          "usingTeamPlayerPay": {
+            "type": "boolean",
+            "default": false
+          },
+          "hostIp": {
+            "type": "string"
+          },
+          "userAgent": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "string",
+            "nullable": true,
+            "description": "Amount that the invoice will be created."
+          },
+          "ngPaymentPlanId": {
+            "type": "string",
+            "description": "Optional NG Payment Plan ID that will be associated with the invoice"
+          }
+        },
+        "required": [
+          "userId",
+          "programId",
+          "externalRegistrationId",
+          "hostIp",
+          "userAgent"
+        ],
+        "additionalProperties": false
+      }
+    }
+  }
+}

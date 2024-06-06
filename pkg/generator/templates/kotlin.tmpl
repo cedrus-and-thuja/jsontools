@@ -1,0 +1,37 @@
+package {{.Config.KotlinPackageName}}
+
+//-------------------------------------------------------------
+// This file is generated and should not be edited manually
+//-------------------------------------------------------------
+
+import kotlinx.serialization.Serializable
+
+{{- range $i, $schema := .Enums}}
+enum class {{$schema.Title | CapFirst -}}(val value: {{ $schema | GetKotlinType}}) {
+    {{- range $i, $enum := $schema.Enum}}
+    {{$enum | NameSafe | AllCap}}({{$enum | Literalize}}),
+    {{- end}}
+
+       companion object {
+        fun lookup(value: {{ $schema | GetKotlinType}}): {{$schema.Title | CapFirst -}}? {
+            for (type in {{$schema.Title | CapFirst -}}.values()) {
+                if (value == type.value)
+                    return type
+            }
+
+            return null
+        }
+    }
+
+}
+
+{{end}}
+
+{{- range $i, $schema := .Schemas}}
+@Serializable
+data class {{$schema.Title -}}(
+    {{- range $key, $prop := $schema.Properties}}
+    public var {{$key }} : {{$prop | MapTypeKotlin -}}?,
+    {{- end}}
+)
+{{end}}

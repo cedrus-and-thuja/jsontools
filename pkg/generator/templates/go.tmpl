@@ -1,0 +1,26 @@
+package {{.Config.PackageName}}
+
+//-------------------------------------------------------------
+// This file is generated and should not be edited manually
+//-------------------------------------------------------------
+
+{{- range $i, $schema := .Enums}}
+type {{$schema.Title | CapFirst}} {{ $schema | GetGoType}}
+
+const (
+    {{- range $i, $enum := $schema.Enum}}
+    {{$schema.Title | AllCap}}_{{$enum | AllCap}} {{$schema.Title | CapFirst}} = {{$enum | Literalize}}
+    {{- end}}
+)
+{{end}}
+
+{{- range $i, $schema := .Schemas}}
+{{end}}
+
+{{- range $i, $schema := .Schemas}}
+type {{$schema.Title}} struct {
+    {{- range $key, $prop := $schema.Properties}}
+    {{$key | CapFirst}} {{$prop | MapType}} `json:"{{$key -}}"`
+    {{- end}}
+}
+{{end}}

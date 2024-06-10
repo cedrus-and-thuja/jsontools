@@ -7,7 +7,6 @@ import (
 	"os"
 
 	"github.com/cedrus-and-thuja/jsontools/pkg/generator"
-	"github.com/santhosh-tekuri/jsonschema/v5"
 )
 
 func main() {
@@ -20,17 +19,7 @@ func main() {
 	flag.BoolVar(&generateKotlin, "kotlin", false, "generate kotlin classes, defaults to false")
 	flag.Parse()
 
-	schemaFile, err := os.Open(schemaFileLocation)
-	if err != nil {
-		fmt.Printf("error loading schema: %s", err)
-		os.Exit(8)
-	}
-	compiler := jsonschema.NewCompiler()
-	compiler.ExtractAnnotations = true
-	if err := compiler.AddResource("schema.json", schemaFile); err != nil {
-		panic(err)
-	}
-	schema, err := compiler.Compile("schema.json")
+	schema, err := generator.LoadSchemaFromFile(schemaFileLocation)
 	if err != nil {
 		fmt.Printf("error parsing schema: %s\n", err)
 		os.Exit(1)

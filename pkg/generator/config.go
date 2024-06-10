@@ -31,9 +31,9 @@ func (c *Config) GetWriter(t OutputType) (io.Writer, error) {
 	}
 	switch t {
 	case GO:
-		return os.OpenFile(filepath.Join(c.OutputDirectory, c.GoFileName), os.O_RDWR|os.O_CREATE, 0750)
+		return os.OpenFile(filepath.Join(c.OutputDirectory, c.GoFileName), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0750)
 	case KOTLIN:
-		return os.OpenFile(filepath.Join(c.OutputDirectory, c.KotlineFileName), os.O_RDWR|os.O_CREATE, 0750)
+		return os.OpenFile(filepath.Join(c.OutputDirectory, c.KotlineFileName), os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0750)
 	}
 	return os.Stdout, nil
 }

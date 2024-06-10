@@ -90,6 +90,7 @@ func Construct(schema *jsonschema.Schema, config Config, outType OutputType) err
 		"MapTypeKotlin": MapTypeKotlin,
 		"GetKotlinType": GetKotlinType,
 		"NameSafe":      NameSafe,
+		"MarshalSchema": MarshalSchema,
 	}
 	var tmpl *template.Template
 	switch outType {

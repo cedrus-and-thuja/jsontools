@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/product.schema.json",
+  "$id": "https://leagueapps.com/messages/create-invoice-message.schema.json",
   "title": "CreateInvoicesMessage",
   "description": "Message Payload for a create invoice event",
   "type": "object",

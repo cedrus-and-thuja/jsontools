@@ -4,6 +4,10 @@ package {{.Config.PackageName}}
 // This file is generated and should not be edited manually
 //-------------------------------------------------------------
 
+import (
+    "github.com/cedrus-and-thuja/jsontools/pkg/generator"
+)
+
 {{- range $i, $schema := .Enums}}
 type {{$schema.Title | CapFirst}} {{ $schema | GetGoType}}
 
@@ -14,13 +18,20 @@ const (
 )
 {{end}}
 
-{{- range $i, $schema := .Schemas}}
-{{end}}
 
 {{- range $i, $schema := .Schemas}}
-type {{$schema.Title}} struct {
+const {{$schema.Title | AllCap -}}_SCHEMA = `{{$schema | MarshalSchema}}`
+
+type {{$schema.Title | CapFirst}} struct {
     {{- range $key, $prop := $schema.Properties}}
     {{$key | CapFirst}} {{$prop | MapType}} `json:"{{$key -}}"`
     {{- end}}
 }
+
+func(thing {{$schema.Title | CapFirst}}) Validate() error {
+    schema := generator.LoadSchemaFromString({{$schema.Title | AllCap -}}_SCHEMA)
+    return schema.Validate(thing)
+}
+
 {{end}}
+

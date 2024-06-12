@@ -19,7 +19,7 @@ func main() {
 	flag.BoolVar(&generateKotlin, "kotlin", false, "generate kotlin classes, defaults to false")
 	flag.Parse()
 
-	schema, err := generator.LoadSchemaFromFile(schemaFileLocation)
+	data, schema, err := generator.LoadSchemaFromFile(schemaFileLocation)
 	if err != nil {
 		fmt.Printf("error parsing schema: %s\n", err)
 		os.Exit(1)
@@ -29,14 +29,14 @@ func main() {
 		os.Exit(4)
 	}
 	if generateGo {
-		err = generator.Construct(schema, generator.NewConfig(), generator.GO)
+		err = generator.Construct(data, schema, generator.NewConfig(), generator.GO)
 		if err != nil {
 			fmt.Printf("error generating go structs: %s\n", err)
 			os.Exit(2)
 		}
 	}
 	if generateKotlin {
-		err = generator.Construct(schema, generator.NewConfig(), generator.KOTLIN)
+		err = generator.Construct(data, schema, generator.NewConfig(), generator.KOTLIN)
 		if err != nil {
 			fmt.Printf("error generating kotlin classes: %s\n", err)
 			os.Exit(3)

@@ -1,0 +1,18 @@
+{
+    "version": 99,
+    "registrationSummary": [
+        {
+            "Amount":        "100.78",
+            "BaseEventRole": "BASEEVENTROLE_CAPTAIN",
+            "ExternalRegistrationId": "22c88a3e-2743-11ef-81de-7b2984b80ae5",
+            "HostIp":                 "10.22.0.1",
+            "NgPaymentPlanId":        "",
+            "ProgramId":              1,
+            "ProgramStaffId":         14389,
+            "UserAgent":              "axios/1.6.8",
+            "UserId":                 -2,
+            "UsingTeamPlayerPay":     false,
+            "VariableTeamFee":        false
+        }
+    ]
+}

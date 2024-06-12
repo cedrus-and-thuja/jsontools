@@ -144,11 +144,3 @@ func NameSafe(value interface{}) string {
 		return "UNKNOWN"
 	}
 }
-
-func MarshalSchema(schema *jsonschema.Schema) string {
-	b, err := json.Marshal(schema)
-	if err != nil {
-		return fmt.Sprintf("/* Error marshalling schema: %s */", err)
-	}
-	return string(b)
-}

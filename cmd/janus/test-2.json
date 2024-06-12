@@ -1,0 +1,18 @@
+{
+    "registrationSummary": [
+        {
+            "amount": "100.78",
+            "baseEventRole": "",
+            "externalRegistrationId": "22c88a3e-2743-11ef-81de-7b2984b80ae5",
+            "hostIp": "10.22.0.1",
+            "ngPaymentPlanId": "",
+            "programId": 1,
+            "programStaffId": 14389,
+            "userAgent": "axios/1.6.8",
+            "userId": -2,
+            "usingTeamPlayerPay": false,
+            "variableTeamFee": false
+        }
+    ],
+    "version": 99
+}

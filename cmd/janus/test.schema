@@ -4,11 +4,12 @@
   "title": "CreateInvoicesMessage",
   "description": "Message Payload for a create invoice event",
   "type": "object",
+  "required": ["version", "registrationSummary"],
   "properties": {
     "version": {
       "type": "integer",
       "enum": [
-        1, 2, 3
+        1
       ]
     },
     "registrationSummary": {

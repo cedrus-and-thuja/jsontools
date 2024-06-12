@@ -21,10 +21,16 @@ var GO_TEMPLATE string
 //go:embed templates/kotlin.tmpl
 var KOTLIN_TEMPLATE string
 
+type RootSchema struct {
+	Title string
+	Data  string
+}
+
 type Context struct {
-	Schemas []*jsonschema.Schema
-	Enums   []*jsonschema.Schema
-	Config  Config
+	RootSchema RootSchema
+	Schemas    []*jsonschema.Schema
+	Enums      []*jsonschema.Schema
+	Config     Config
 }
 
 func CollectSchemas(schema *jsonschema.Schema) []*jsonschema.Schema {
@@ -73,7 +79,7 @@ func CollectEnums(schema *jsonschema.Schema) []*jsonschema.Schema {
 	return schemas
 }
 
-func Construct(schema *jsonschema.Schema, config Config, outType OutputType) error {
+func Construct(schemaText string, schema *jsonschema.Schema, config Config, outType OutputType) error {
 	var err error
 	wr, err := config.GetWriter(outType)
 	if err != nil {
@@ -90,21 +96,22 @@ func Construct(schema *jsonschema.Schema, config Config, outType OutputType) err
 		"MapTypeKotlin": MapTypeKotlin,
 		"GetKotlinType": GetKotlinType,
 		"NameSafe":      NameSafe,
-		"MarshalSchema": MarshalSchema,
 	}
 	var tmpl *template.Template
 	switch outType {
 	case KOTLIN:
 		tmpl, err = template.New("test").Funcs(funcMap).Parse(KOTLIN_TEMPLATE)
-		break
 	case GO:
 		tmpl, err = template.New("test").Funcs(funcMap).Parse(GO_TEMPLATE)
-		break
 	}
 	if err != nil {
 		return err
 	}
 	context := Context{
+		RootSchema: RootSchema{
+			Title: schema.Title,
+			Data:  schemaText,
+		},
 		Schemas: CollectSchemas(schema),
 		Config:  config,
 		Enums:   CollectEnums(schema),

@@ -20,7 +20,6 @@ const (
 
 
 {{- range $i, $schema := .Schemas}}
-const {{$schema.Title | AllCap -}}_SCHEMA = `{{$schema | MarshalSchema}}`
 
 type {{$schema.Title | CapFirst}} struct {
     {{- range $key, $prop := $schema.Properties}}
@@ -28,10 +27,24 @@ type {{$schema.Title | CapFirst}} struct {
     {{- end}}
 }
 
-func(thing {{$schema.Title | CapFirst}}) Validate() error {
-    schema := generator.LoadSchemaFromString({{$schema.Title | AllCap -}}_SCHEMA)
-    return schema.Validate(thing)
-}
-
 {{end}}
 
+const {{.RootSchema.Title | AllCap -}}_SCHEMA = `{{.RootSchema.Data}}`
+
+
+func(thing {{.RootSchema.Title | CapFirst}}) Validate() error {
+    schema, err := generator.LoadSchemaFromString({{.RootSchema.Title | AllCap -}}_SCHEMA)
+	if err != nil {
+		return err
+	}
+	asJson, err := json.Marshal(thing)
+	if err != nil {
+		return err
+	}
+	object := map[string]interface{}{}
+	err = json.Unmarshal(asJson, &object)
+	if err != nil {
+		return err
+	}
+	return schema.Validate(object)
+}
